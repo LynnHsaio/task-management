@@ -6,6 +6,7 @@ import {
 } from "@dnd-kit/sortable";
 import { FiPlus, FiEdit2, FiTrash2 } from "react-icons/fi";
 import Card from "./Card";
+import EditableTitle from "./EditableTitle";
 
 const List = ({
   list,
@@ -33,62 +34,21 @@ const List = ({
     }
   };
 
-  const handleEditList = () => {
-    if (listTitle.trim() && listTitle !== list.title) {
-      onEditList(boardId, list.id, { title: listTitle.trim() });
-    }
-    setIsEditingList(false);
+  const handleEdit = (title) => {
+    onEditList(boardId, list.id, { title });
   };
 
-  const handleCancelEdit = () => {
-    setListTitle(list.title);
-    setIsEditingList(false);
+  const handleDelete = () => {
+    onDeleteList(boardId, list.id);
   };
 
   return (
     <div className="list">
-      <div className="list-header">
-        {isEditingList ? (
-          <div className="list-title-edit">
-            <input
-              type="text"
-              value={listTitle}
-              onChange={(e) => setListTitle(e.target.value)}
-              className="list-title-input"
-              autoFocus
-              onBlur={handleEditList}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleEditList();
-                } else if (e.key === "Escape") {
-                  handleCancelEdit();
-                }
-              }}
-            />
-          </div>
-        ) : (
-          <h3 className="list-title" onClick={() => setIsEditingList(true)}>
-            {list.title}
-          </h3>
-        )}
-
-        <div className="list-actions">
-          <button
-            onClick={() => setIsEditingList(true)}
-            className="edit-list-btn"
-            title="編輯列表"
-          >
-            <FiEdit2 size={14} />
-          </button>
-          <button
-            onClick={() => onDeleteList(boardId, list.id)}
-            className="delete-list-btn"
-            title="刪除列表"
-          >
-            <FiTrash2 size={14} />
-          </button>
-        </div>
-      </div>
+      <EditableTitle
+        initialTitle={list.title}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
 
       <div className="list-content" ref={setNodeRef}>
         <SortableContext
