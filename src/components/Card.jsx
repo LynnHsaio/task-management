@@ -6,6 +6,7 @@ import { priorityOptions } from "../data/sampleData";
 
 const Card = ({ card, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [editData, setEditData] = useState({
     title: card.title,
     description: card.description,
@@ -21,7 +22,10 @@ const Card = ({ card, onEdit, onDelete }) => {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: card.id });
+  } = useSortable({
+    id: card.id,
+    disabled: isButtonHovered,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -134,7 +138,11 @@ const Card = ({ card, onEdit, onDelete }) => {
     >
       <div className="card-header">
         <h4 className="card-title">{card.title}</h4>
-        <div className="card-actions">
+        <div
+          className="card-actions"
+          onMouseEnter={() => setIsButtonHovered(true)}
+          onMouseLeave={() => setIsButtonHovered(false)}
+        >
           <button
             onClick={() => setIsEditing(true)}
             className="edit-btn"
