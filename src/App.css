@@ -1,0 +1,1312 @@
+/* 全域樣式 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f5f7;
+  color: #172b4d;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App 主要佈局 */
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.app-main {
+  flex: 1;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+/* 看板選擇器 */
+.board-selector {
+  position: relative;
+}
+
+.board-selector-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.board-selector-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.chevron {
+  transition: transform 0.2s ease;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.board-selector-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 250px;
+  margin-top: 0.5rem;
+  z-index: 1000;
+}
+
+.board-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.board-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e1e5e9;
+  transition: background-color 0.2s ease;
+}
+
+.board-item:hover {
+  background-color: #f4f5f7;
+}
+
+.board-item.active {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.board-item-title {
+  font-weight: 500;
+}
+
+.board-item-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.board-item:hover .board-item-actions {
+  opacity: 1;
+}
+
+.edit-board-item-btn,
+.delete-board-item-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #6b778c;
+  transition: all 0.2s ease;
+}
+
+.edit-board-item-btn:hover {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.delete-board-item-btn:hover {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.board-selector-footer {
+  padding: 0.75rem;
+  border-top: 1px solid #e1e5e9;
+}
+
+.add-board-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-board-input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.add-board-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.add-board-btn,
+.cancel-add-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.add-board-btn {
+  background-color: #0079bf;
+  color: white;
+}
+
+.add-board-btn:hover {
+  background-color: #005a8b;
+}
+
+.cancel-add-btn {
+  background-color: #f4f5f7;
+  color: #6b778c;
+}
+
+.cancel-add-btn:hover {
+  background-color: #e1e5e9;
+}
+
+.add-board-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: none;
+  border: 2px dashed #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #6b778c;
+  transition: all 0.2s ease;
+}
+
+.add-board-button:hover {
+  border-color: #0079bf;
+  color: #0079bf;
+}
+
+/* 看板樣式 */
+.board {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.board-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+.edit-board-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #6b778c;
+  transition: all 0.2s ease;
+}
+
+.edit-board-btn:hover {
+  background-color: #f4f5f7;
+  color: #172b4d;
+}
+
+.board-content {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.lists-container {
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+  padding-bottom: 1rem;
+}
+
+/* 列表樣式 */
+.list {
+  background: #ebecf0;
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 280px;
+  max-width: 280px;
+  height: fit-content;
+  max-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.list-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #172b4d;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.list-title:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.list-title-input {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #172b4d;
+  background: none;
+  border: 2px solid #0079bf;
+  border-radius: 4px;
+  padding: 0.25rem;
+  width: 100%;
+}
+
+.list-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.list:hover .list-actions {
+  opacity: 1;
+}
+
+.edit-list-btn,
+.delete-list-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #6b778c;
+  transition: all 0.2s ease;
+}
+
+.edit-list-btn:hover {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.delete-list-btn:hover {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.list-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* 卡片樣式 */
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #172b4d;
+  margin: 0;
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover .card-actions {
+  opacity: 1;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #6b778c;
+  transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.delete-btn:hover {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.card-description {
+  font-size: 0.8rem;
+  color: #6b778c;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.priority-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: white;
+  text-transform: uppercase;
+}
+
+.due-date {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  color: #6b778c;
+}
+
+.due-date.overdue {
+  color: #d32f2f;
+}
+
+.card-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.label-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #f4f5f7;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: #6b778c;
+}
+
+/* 編輯表單樣式 */
+.card-edit-form {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 2px solid #0079bf;
+}
+
+.card-title-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.card-description-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  resize: vertical;
+  margin-bottom: 0.5rem;
+}
+
+.card-edit-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.priority-select,
+.due-date-input {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.card-edit-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.save-btn {
+  background-color: #0079bf;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.save-btn:hover {
+  background-color: #005a8b;
+}
+
+.cancel-btn {
+  background-color: #f4f5f7;
+  color: #6b778c;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #e1e5e9;
+}
+
+/* 新增卡片按鈕 */
+.add-card-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: none;
+  border: 2px dashed #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #6b778c;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.add-card-button:hover {
+  border-color: #0079bf;
+  color: #0079bf;
+}
+
+.add-card-form {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 2px solid #0079bf;
+}
+
+.add-card-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  resize: vertical;
+  margin-bottom: 0.75rem;
+}
+
+.add-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.add-card-btn {
+  background-color: #0079bf;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.add-card-btn:hover {
+  background-color: #005a8b;
+}
+
+/* 新增列表按鈕 */
+.add-list-button {
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #6b778c;
+  transition: all 0.2s ease;
+  min-width: 280px;
+  height: fit-content;
+}
+
+.add-list-button:hover {
+  border-color: #0079bf;
+  color: #0079bf;
+  background: rgba(255, 255, 255, 1);
+}
+
+.add-list-form {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 2px solid #0079bf;
+  min-width: 280px;
+}
+
+.add-list-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.add-list-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.add-list-btn {
+  background-color: #0079bf;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.add-list-btn:hover {
+  background-color: #005a8b;
+}
+
+/* 拖拽預覽 */
+.card-drag-preview {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: rotate(5deg);
+  opacity: 0.9;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .app-title {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .app-main {
+    padding: 0.5rem;
+  }
+
+  .lists-container {
+    gap: 0.75rem;
+  }
+
+  .list {
+    min-width: 250px;
+    max-width: 250px;
+  }
+
+  .add-list-button,
+  .add-list-form {
+    min-width: 250px;
+  }
+
+  .board-selector-dropdown {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .list {
+    min-width: 220px;
+    max-width: 220px;
+  }
+
+  .add-list-button,
+  .add-list-form {
+    min-width: 220px;
+  }
+}
+
+/* 滾動條樣式 */
+.list-content::-webkit-scrollbar,
+.board-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list-content::-webkit-scrollbar-track,
+.board-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.list-content::-webkit-scrollbar-thumb,
+.board-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.list-content::-webkit-scrollbar-thumb:hover,
+.board-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 視圖切換器樣式 */
+.view-switcher {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.view-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.view-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.view-btn.active {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* 日曆視圖樣式 */
+.calendar-view {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.calendar-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e1e5e9;
+  background: white;
+}
+
+.calendar-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-title h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #172b4d;
+  margin: 0;
+}
+
+.calendar-navigation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-btn,
+.today-btn {
+  background: #f4f5f7;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #6b778c;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn:hover,
+.today-btn:hover {
+  background: #e1e5e9;
+  color: #172b4d;
+}
+
+.today-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.selected-date-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e1e5e9;
+}
+
+.selected-date-info span {
+  color: #6b778c;
+  font-weight: 500;
+}
+
+.add-task-btn {
+  background: #0079bf;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.add-task-btn:hover {
+  background: #005a8b;
+}
+
+/* 新增任務表單 */
+.add-task-form {
+  background: white;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-task-form h3 {
+  margin: 0 0 1rem 0;
+  color: #172b4d;
+  font-size: 1.1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.task-title-input,
+.task-description-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.task-title-input:focus,
+.task-description-input:focus {
+  outline: none;
+  border-color: #0079bf;
+}
+
+.task-description-input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.priority-select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.save-btn {
+  background: #0079bf;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #005a8b;
+}
+
+.cancel-btn {
+  background: #f4f5f7;
+  color: #6b778c;
+}
+
+.cancel-btn:hover {
+  background: #e1e5e9;
+}
+
+/* 日曆網格 */
+.calendar-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #f8f9fa;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.weekday-header {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #6b778c;
+  border-right: 1px solid #e1e5e9;
+}
+
+.weekday-header:last-child {
+  border-right: none;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  flex: 1;
+}
+
+.calendar-day {
+  min-height: 120px;
+  border-right: 1px solid #e1e5e9;
+  border-bottom: 1px solid #e1e5e9;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.calendar-day:hover {
+  background: #f8f9fa;
+}
+
+.calendar-day.other-month {
+  background: #fafbfc;
+  color: #c1c7cd;
+}
+
+.calendar-day.selected {
+  background: #e3f2fd;
+  border-color: #1976d2;
+}
+
+.calendar-day.today {
+  background: #fff3e0;
+}
+
+.calendar-day.today .day-number {
+  background: #ff9800;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.day-number {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.day-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.task-item {
+  background: #0079bf;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.task-item .task-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.task-item:hover .task-actions {
+  opacity: 1;
+}
+
+.edit-task-btn,
+.delete-task-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 3px;
+  padding: 0.125rem;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.edit-task-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.delete-task-btn:hover {
+  background: rgba(255, 0, 0, 0.3);
+}
+
+.more-tasks {
+  background: #6b778c;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+/* 選中日期的詳細任務列表 */
+.selected-date-tasks {
+  background: white;
+  border-top: 1px solid #e1e5e9;
+  padding: 1.5rem 2rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.selected-date-tasks h3 {
+  margin: 0 0 1rem 0;
+  color: #172b4d;
+  font-size: 1.1rem;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detailed-task-item {
+  background: #f8f9fa;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: all 0.2s ease;
+}
+
+.detailed-task-item:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-info {
+  flex: 1;
+}
+
+.task-info .task-title {
+  margin: 0 0 0.5rem 0;
+  color: #172b4d;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.task-info .task-description {
+  margin: 0 0 0.75rem 0;
+  color: #6b778c;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.task-meta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.task-list-name {
+  color: #6b778c;
+  font-size: 0.8rem;
+}
+
+.task-priority {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: white;
+  text-transform: uppercase;
+}
+
+.detailed-task-item .task-actions {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 1;
+}
+
+.detailed-task-item .edit-task-btn,
+.detailed-task-item .delete-task-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #6b778c;
+  transition: all 0.2s ease;
+}
+
+.detailed-task-item .edit-task-btn:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+  border-color: #1976d2;
+}
+
+.detailed-task-item .delete-task-btn:hover {
+  background: #ffebee;
+  color: #d32f2f;
+  border-color: #d32f2f;
+}
+
+.no-tasks {
+  text-align: center;
+  color: #6b778c;
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* 響應式設計 - 日曆 */
+@media (max-width: 768px) {
+  .header-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .view-switcher {
+    justify-content: center;
+  }
+
+  .calendar-header {
+    padding: 1rem;
+  }
+
+  .calendar-title {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .calendar-navigation {
+    justify-content: center;
+  }
+
+  .selected-date-info {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .calendar-day {
+    min-height: 80px;
+  }
+
+  .day-tasks {
+    gap: 0.125rem;
+  }
+
+  .task-item {
+    font-size: 0.7rem;
+    padding: 0.125rem 0.25rem;
+  }
+
+  .selected-date-tasks {
+    padding: 1rem;
+  }
+
+  .detailed-task-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .detailed-task-item .task-actions {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-day {
+    min-height: 60px;
+    padding: 0.25rem;
+  }
+
+  .day-number {
+    font-size: 0.8rem;
+  }
+
+  .task-item {
+    font-size: 0.65rem;
+    padding: 0.125rem;
+  }
+
+  .weekday-header {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.8rem;
+  }
+}
