@@ -3,6 +3,7 @@ import { DndContext, DragOverlay, closestCenter } from "@dnd-kit/core";
 import { FiPlus, FiEdit2, FiTrash2 } from "react-icons/fi";
 import List from "./List";
 import { useBoard } from "../context/BoardContext.jsx";
+import EditableTitle from "./EditableTitle.jsx";
 
 const Board = () => {
   const { state, actions } = useBoard();
@@ -81,31 +82,21 @@ const Board = () => {
     return currentBoard.lists.find((list) => list.id === listId);
   };
 
+  const handleEdit = (title) => {
+    console.log("handleEdit", title);
+    actions.updateBoard(state.currentBoardId, { title });
+  };
+
   if (!currentBoard) {
     return <div className="no-board">找不到看板</div>;
   }
 
   return (
     <div className="board">
-      <div className="board-header">
-        <h1 className="board-title">{currentBoard.title}</h1>
-        <div className="board-actions">
-          <button
-            onClick={() => {
-              const newTitle = prompt("請輸入新看板名稱:", currentBoard.title);
-              if (newTitle && newTitle.trim()) {
-                actions.updateBoard(state.currentBoardId, {
-                  title: newTitle.trim(),
-                });
-              }
-            }}
-            className="edit-board-btn"
-            title="編輯看板"
-          >
-            <FiEdit2 size={16} />
-          </button>
-        </div>
-      </div>
+      <EditableTitle
+        initialTitle={currentBoard.title}
+        handleEdit={handleEdit}
+      />
 
       <DndContext
         collisionDetection={closestCenter}

@@ -4,7 +4,7 @@ import { FiEdit2, FiTrash2 } from "react-icons/fi";
 export default function EditableTitle({
   initialTitle,
   handleEdit,
-  handleDelete,
+  handleDelete = null,
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(initialTitle);
@@ -22,14 +22,14 @@ export default function EditableTitle({
   };
 
   return (
-    <div className="list-header">
+    <div className="header">
       {isEditing ? (
-        <div className="list-title-edit">
+        <div className="title-edit">
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="list-title-input"
+            className="title-input"
             autoFocus
             onBlur={handleEditList}
             onKeyDown={(e) => {
@@ -42,26 +42,28 @@ export default function EditableTitle({
           />
         </div>
       ) : (
-        <h3 className="list-title" onClick={() => setIsEditing(true)}>
+        <h3 className="title" onClick={() => setIsEditing(true)}>
           {initialTitle}
         </h3>
       )}
 
-      <div className="list-actions">
+      <div className="title-actions">
         <button
           onClick={() => setIsEditing(true)}
-          className="edit-list-btn"
+          className="edit-title-btn"
           title="編輯列表"
         >
           <FiEdit2 size={14} />
         </button>
-        <button
-          onClick={() => handleDelete()}
-          className="delete-list-btn"
-          title="刪除列表"
-        >
-          <FiTrash2 size={14} />
-        </button>
+        {handleDelete && (
+          <button
+            onClick={() => handleDelete()}
+            className="delete-title-btn"
+            title="刪除列表"
+          >
+            <FiTrash2 size={14} />
+          </button>
+        )}
       </div>
     </div>
   );
