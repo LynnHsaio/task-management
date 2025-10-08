@@ -40,7 +40,9 @@ const boardReducer = (state, action) => {
       return {
         ...state,
         boards: state.boards.map((board) =>
-          board.id === action.payload.id ? action.payload : board
+          board.id === action.payload.id
+            ? { ...board, title: action.payload.title }
+            : board
         ),
       };
 
