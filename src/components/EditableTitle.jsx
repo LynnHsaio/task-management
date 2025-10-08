@@ -9,7 +9,12 @@ export default function EditableTitle({
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(initialTitle);
 
-  const handleEditList = () => {
+  const handleOpenEdit = (e) => {
+    e.stopPropagation();
+    setIsEditing(true);
+  };
+
+  const handleEditTitle = () => {
     if (title.trim() && title !== initialTitle) {
       handleEdit(title.trim());
     }
@@ -31,10 +36,10 @@ export default function EditableTitle({
             onChange={(e) => setTitle(e.target.value)}
             className="title-input"
             autoFocus
-            onBlur={handleEditList}
+            onBlur={handleEditTitle}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                handleEditList();
+                handleEditTitle();
               } else if (e.key === "Escape") {
                 handleCancelEdit();
               }
@@ -42,14 +47,14 @@ export default function EditableTitle({
           />
         </div>
       ) : (
-        <h3 className="title" onClick={() => setIsEditing(true)}>
+        <h3 className="title" onClick={handleOpenEdit}>
           {initialTitle}
         </h3>
       )}
 
       <div className="title-actions">
         <button
-          onClick={() => setIsEditing(true)}
+          onClick={handleOpenEdit}
           className="edit-title-btn"
           title="編輯列表"
         >
@@ -57,7 +62,7 @@ export default function EditableTitle({
         </button>
         {handleDelete && (
           <button
-            onClick={() => handleDelete()}
+            onClick={handleDelete}
             className="delete-title-btn"
             title="刪除列表"
           >

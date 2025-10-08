@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FiPlus, FiEdit2, FiTrash2, FiChevronDown } from "react-icons/fi";
 import { useBoard } from "../context/BoardContext.jsx";
+import EditableTitle from "./EditableTitle.jsx";
 
 const BoardSelector = () => {
   const { state, actions } = useBoard();
@@ -67,31 +68,13 @@ const BoardSelector = () => {
                 }`}
                 onClick={() => handleSelectBoard(board.id)}
               >
-                <span className="board-item-title">{board.title}</span>
-                <div className="board-item-actions">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const newTitle = prompt("請輸入新看板名稱:", board.title);
-                      if (newTitle && newTitle.trim()) {
-                        actions.updateBoard(board.id, {
-                          title: newTitle.trim(),
-                        });
-                      }
-                    }}
-                    className="edit-board-item-btn"
-                    title="編輯看板"
-                  >
-                    <FiEdit2 size={12} />
-                  </button>
-                  <button
-                    onClick={(e) => handleDeleteBoard(board.id, e)}
-                    className="delete-board-item-btn"
-                    title="刪除看板"
-                  >
-                    <FiTrash2 size={12} />
-                  </button>
-                </div>
+                <EditableTitle
+                  initialTitle={board.title}
+                  handleEdit={(title) => {
+                    actions.updateBoard(board.id, { title });
+                  }}
+                  handleDelete={(e) => handleDeleteBoard(board.id, e)}
+                />
               </div>
             ))}
           </div>
